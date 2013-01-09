@@ -36,13 +36,12 @@ class AttachmentNotify(Component):
             return
 
     def _notify_attachment(self, attachment, add):
-        author = attachment.author
-
         ticket = self._get_parent_ticket(attachment)
         if not ticket:
             return
 
         filename = attachment.filename
+        author = attachment.author
         now = attachment.date or datetime.now(utc)
 
         if add:
