@@ -73,9 +73,13 @@ class AttachmentNotifyEmail(TicketNotifyEmail):
             ticket_values = ticket.values.copy()
             ticket_values['id'] = ticket.id
             ticket_values['description'] = wrap(
-                ticket_values.get('description', ''), self.COLS,
-                initial_indent=' ', subsequent_indent=' ', linesep=CRLF,
-                ambiwidth=self.ambiwidth)
+                ticket_values.get('description', ''),
+                self.COLS,
+                initial_indent=' ',
+                subsequent_indent=' ',
+                linesep=CRLF,
+                ambiwidth=self.ambiwidth
+            )
             ticket_values['new'] = self.newticket
             ticket_values['link'] = link
             subject = 'Re: ' + self.format_subj(summary)
