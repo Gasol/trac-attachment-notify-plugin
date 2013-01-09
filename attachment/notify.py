@@ -22,9 +22,7 @@ class AttachmentNotify(Component):
     def attachment_reparented(self, attachment, old_parent_realm, old_parent_id):
         pass
 
-    def _notify_attachment(self, attachment, add):
-        author = attachment.author
-
+    def _get_parent_ticket(self, attachment):
         resource = attachment.resource
         while resource:
             if 'ticket' == resource.realm:
@@ -33,8 +31,15 @@ class AttachmentNotify(Component):
 
         try:
             if resource and resource.id:
-                ticket = Ticket(self.env, resource.id)
+                return Ticket(self.env, resource.id)
         except ResourceNotFound:
+            return
+
+    def _notify_attachment(self, attachment, add):
+        author = attachment.author
+
+        ticket = self._get_parent_ticket(attachment)
+        if not ticket:
             return
 
         filename = attachment.filename
