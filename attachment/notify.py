@@ -1,3 +1,10 @@
+#
+# Copyright (C) 2013 KKBOX Technologies Ltd.
+# Copyright (C) 2013 Gasol Wu <gasol.wu@gmail.com>
+#
+# This software is licensed as described in the file COPYING, which
+# you should have received as part of this distribution.
+
 from datetime import datetime
 from trac.attachment import IAttachmentChangeListener
 from trac.core import Component, implements
