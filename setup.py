@@ -26,6 +26,7 @@ setup(
     license = '3-Clause BSD',
     keywords = 'attachment notification trac plugin',
     packages = find_packages(),
+    zip_safe = False,
     entry_points = {
         'trac.plugins': [
             'attachment.notify = attachment.notify',
