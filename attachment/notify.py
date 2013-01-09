@@ -56,8 +56,8 @@ class AttachmentNotify(Component):
         if attachment.description:
             body += "\n\n" + attachment.description
 
-        tn = AttachmentNotifyEmail(self.env)
-        tn.notify_attachment(ticket, author, filename, now, body)
+        an = AttachmentNotifyEmail(self.env)
+        an.notify_attachment(ticket, author, filename, now, body)
 
 class AttachmentNotifyEmail(TicketNotifyEmail):
     def notify_attachment(self, ticket, author, filename, modtime, body):
