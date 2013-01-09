@@ -23,7 +23,7 @@ setup(
     version = VERSION,
     author = 'Gasol Wu',
     author_email = 'gasolwu@kkbox.com',
-    license = 'BSD',
+    license = '3-Clause BSD',
     keywords = 'attachment notification trac plugin',
     packages = find_packages(),
     entry_points = {
