@@ -24,6 +24,7 @@ setup(
     version = VERSION,
     author = 'Gasol Wu',
     author_email = 'gasolwu@kkbox.com',
+    description = 'Trac Attachment Notify Plugin',
     license = '3-Clause BSD',
     keywords = 'attachment notification trac plugin',
     packages = find_packages(),
