@@ -43,16 +43,15 @@ class AttachmentNotify(Component):
         filename = attachment.filename
         author = attachment.author
         now = attachment.date or datetime.now(utc)
+        action = add and 'Add' or 'Delete'
+        body = '%s attachment "%s"' % (action, filename)
 
         if add:
-            raw_url = get_resource_url(self.env, attachment.resource, self.env.abs_href, format='raw')
-            if raw_url:
-                raw_url = '(%s)' % raw_url
-            else:
-                raw_url = ''
-            body = 'Add attachment "%s" %s' % (filename, raw_url)
-        else:
-            body = 'Delete attachment "%s"' % (filename)
+            raw_url = get_resource_url(self.env,
+                                       attachment.resource,
+                                       self.env.abs_href,
+                                       format='raw')
+            body += '(%s)' % raw_url if raw_url else ''
 
         if attachment.description:
             body += "\n\n" + attachment.description
