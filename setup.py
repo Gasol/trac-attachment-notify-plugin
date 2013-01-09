@@ -24,6 +24,7 @@ setup(
     author = 'Gasol Wu',
     author_email = 'gasolwu@kkbox.com',
     license = 'BSD',
+    keywords = 'attachment notification trac plugin',
     packages = find_packages(),
     entry_points = {
         'trac.plugins': [
