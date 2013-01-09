@@ -73,11 +73,13 @@ class AttachmentNotifyEmail(TicketNotifyEmail):
         translated_fields = ticket.fields
         try:
             ticket.fields = TicketSystem(self.env).get_ticket_fields()
+
             self.ticket = ticket
             self.modtime = modtime
             self.newticket = False
             self.reporter = ''
             self.owner = ''
+
             link = self.env.abs_href.ticket(ticket.id)
             summary = self.ticket['summary']
             ticket_values = ticket.values.copy()
@@ -95,6 +97,7 @@ class AttachmentNotifyEmail(TicketNotifyEmail):
             subject = 'Re: ' + self.format_subj(summary)
             author = obfuscate_email_address(author)
             change = { 'author': author }
+
             self.data.update({
                 'ticket_props': self.format_props(),
                 'ticket_body_hdr': self.format_hdr(),
@@ -103,6 +106,7 @@ class AttachmentNotifyEmail(TicketNotifyEmail):
                 'change': change,
                 'changes_body': body,
                 })
+
             NotifyEmail.notify(self, ticket.id, subject)
         finally:
             ticket.fields = translated_fields
