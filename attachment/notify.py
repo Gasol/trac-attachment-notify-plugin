@@ -6,6 +6,7 @@
 # you should have received as part of this distribution.
 
 from datetime import datetime
+from inspect import getargspec
 from trac.attachment import IAttachmentChangeListener
 from trac.core import Component, implements
 from trac.util.datefmt import utc
@@ -67,6 +68,13 @@ class AttachmentNotify(Component):
         an.notify_attachment(ticket, author, filename, now, body)
 
 class AttachmentNotifyEmail(TicketNotifyEmail):
+    def __init__(self, env):
+        super(AttachmentNotifyEmail, self).__init__(env)
+        ambiguous_char_width = env.config.get('notification',
+                                              'ambiguous_char_width',
+                                              'single')
+        self.ambiwidth = (1, 2)[ambiguous_char_width == 'double']
+
     def notify_attachment(self, ticket, author, filename, modtime, body):
         """Send ticket attachment notification (untranslated)"""
         t = deactivate()
@@ -84,14 +92,21 @@ class AttachmentNotifyEmail(TicketNotifyEmail):
             summary = self.ticket['summary']
             ticket_values = ticket.values.copy()
             ticket_values['id'] = ticket.id
+
+            wrap_kargs = {
+                'initial_indent': ' ',
+                'subsequent_indent': ' ',
+                'linesep': CRLF
+            }
+            if 'ambiwidth' in getargspec(wrap)[0]:
+                wrap_kargs['ambiwidth'] = self.ambiwidth
+
             ticket_values['description'] = wrap(
                 ticket_values.get('description', ''),
                 self.COLS,
-                initial_indent=' ',
-                subsequent_indent=' ',
-                linesep=CRLF,
-                ambiwidth=self.ambiwidth
+                **wrap_kargs
             )
+
             ticket_values['new'] = self.newticket
             ticket_values['link'] = link
             subject = 'Re: ' + self.format_subj(summary)
