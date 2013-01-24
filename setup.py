@@ -9,7 +9,7 @@
 from setuptools import find_packages, setup
 
 PACKAGE = 'TracAttachmentNotifyPlugin'
-VERSION = '1.0.0'
+VERSION = '1.0.1'
 
 try:
     import trac
